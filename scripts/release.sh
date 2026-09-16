@@ -201,7 +201,8 @@ zip -q -r "$ZIP_PATH" . \
   -x "build/*" \
   -x "scripts/*" \
   -x ".vscode/*" \
-  -x ".idea/*"
+  -x ".idea/*" \
+  -x "index.html"
 
 ZIP_SIZE=$(du -h "$ZIP_PATH" | cut -f1 | tr -d ' ')
 FILE_COUNT=$(unzip -l "$ZIP_PATH" | awk 'END {print $(NF-1)}')
