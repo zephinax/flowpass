@@ -123,6 +123,23 @@ zip -r flowpass.zip . -x "*.git*" "*.DS_Store*" "*.zip"
 
 The resulting `flowpass.zip` archive contains only the required extension files, strictly adhering to Chrome Web Store packaging standards.
 
+### Automated GitHub Release Helper
+
+To package and publish a new GitHub release in one command:
+
+```bash
+# Interactive mode (reads current or prompts version)
+./scripts/release.sh
+
+# Or specify a target version
+./scripts/release.sh 1.2.0
+
+# Create draft release
+./scripts/release.sh 1.2.0 --draft
+```
+
+The script automatically bumps `manifest.json`, commits and pushes the version change, packages the extension archive, and publishes the release on GitHub with release notes.
+
 ---
 
 ## Privacy & Security
