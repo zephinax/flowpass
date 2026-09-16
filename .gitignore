@@ -1,0 +1,16 @@
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# Archives & Extension packages
+*.zip
+*.crx
+*.pem
+
+# Diagnostic & Network captures
+*.har
+*.log
+
+# Editor & IDE files
+.vscode/
+.idea/

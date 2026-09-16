@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>FlowPass — Documentation & Guide</title>
+<style>
+  :root {
+    --bg-page: #050811;
+    --surface-card: rgba(13, 19, 35, 0.82);
+    --surface-elevated: rgba(20, 31, 56, 0.82);
+    --surface-subtle: rgba(255, 255, 255, 0.035);
+    --border-subtle: rgba(255, 255, 255, 0.06);
+    --border-card: rgba(255, 255, 255, 0.085);
+    --border-focus: rgba(6, 182, 212, 0.45);
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    
+    --brand-cyan: #06b6d4;
+    --brand-cyan-light: #22d3ee;
+    --brand-mint: #10b981;
+    --brand-mint-light: #34d399;
+    --gradient-brand: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 42%, #10b981 100%);
+    --gradient-text: linear-gradient(135deg, #38bdf8 0%, #22d3ee 45%, #34d399 100%);
+    
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --radius-lg: 16px;
+    --radius-md: 10px;
+    --radius-sm: 6px;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at 20% -10%, rgba(6, 182, 212, 0.16), transparent 50%),
+                radial-gradient(circle at 85% 15%, rgba(16, 185, 129, 0.12), transparent 50%),
+                radial-gradient(circle at 50% 90%, rgba(37, 99, 235, 0.08), transparent 60%),
+                var(--bg-page);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    padding: 32px 16px;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 480px;
+    background: var(--surface-card);
+    border: 1px solid var(--border-card);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 16px 40px -4px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    overflow: hidden;
+  }
+
+  .header {
+    padding: 30px 24px 22px;
+    text-align: center;
+    border-bottom: 1px solid var(--border-subtle);
+    background: linear-gradient(180deg, rgba(20, 31, 56, 0.45) 0%, transparent 100%);
+  }
+
+  .logo-box {
+    width: 52px;
+    height: 52px;
+    margin: 0 auto 16px;
+    border-radius: var(--radius-md);
+    background: linear-gradient(145deg, rgba(22, 33, 58, 0.95), rgba(11, 17, 32, 0.95));
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  }
+
+  .logo-icon {
+    width: 30px;
+    height: auto;
+    filter: drop-shadow(0 2px 8px rgba(6, 182, 212, 0.45));
+  }
+
+  .title-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .version-tag {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--brand-cyan-light);
+    background: rgba(6, 182, 212, 0.08);
+    border: 1px solid rgba(6, 182, 212, 0.22);
+    padding: 1.5px 6.5px;
+    border-radius: var(--radius-sm);
+    letter-spacing: 0.02em;
+  }
+
+  .subtitle {
+    margin: 0;
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  .content {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .section-title {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin: 0 0 12px;
+  }
+
+  .steps-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .step-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: var(--radius-md);
+    background: var(--surface-subtle);
+    border: 1px solid var(--border-subtle);
+    transition: all 160ms var(--ease);
+  }
+
+  .step-card:hover {
+    border-color: rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .step-num {
+    width: 24px;
+    height: 24px;
+    border-radius: var(--radius-sm);
+    background: rgba(6, 182, 212, 0.1);
+    border: 1px solid rgba(6, 182, 212, 0.25);
+    color: var(--brand-cyan-light);
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .step-text h3 {
+    margin: 0 0 3px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .step-text p {
+    margin: 0;
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.45;
+  }
+
+  .info-box {
+    padding: 14px;
+    border-radius: var(--radius-md);
+    background: rgba(7, 12, 24, 0.65);
+    border: 1px solid var(--border-card);
+    border-left: 3px solid var(--brand-cyan);
+  }
+
+  .info-box p {
+    margin: 0;
+    font-size: 11.5px;
+    line-height: 1.55;
+    color: var(--text-secondary);
+  }
+
+  .info-box strong {
+    color: var(--text-primary);
+  }
+
+  .footer {
+    padding: 16px 24px;
+    border-top: 1px solid var(--border-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--text-muted);
+    background: rgba(5, 8, 17, 0.7);
+  }
+
+  .footer-links {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .footer a {
+    color: var(--brand-cyan-light);
+    text-decoration: none;
+    transition: color 150ms;
+  }
+
+  .footer a:hover {
+    text-decoration: underline;
+    color: #67e8f9;
+  }
+</style>
+</head>
+<body>
+<main class="container">
+  <header class="header">
+    <div class="logo-box">
+      <img class="logo-icon" src="assets/icon.png" alt="FlowPass" width="30" height="34">
+    </div>
+    <div class="title-row">
+      <img src="assets/logo-type.png" alt="FlowPass" height="26">
+      <span class="version-tag">v1.1.0</span>
+    </div>
+    <p class="subtitle">Autonomous client-side region adaptation tool for Google Flow.</p>
+  </header>
+
+  <div class="content">
+    <div>
+      <div class="section-title">QUICK START GUIDE</div>
+      <div class="steps-list">
+        <div class="step-card">
+          <div class="step-num">1</div>
+          <div class="step-text">
+            <h3>Activate Protection</h3>
+            <p>Open the FlowPass extension popup and turn on the <strong>Protection Engine</strong> switch.</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">2</div>
+          <div class="step-text">
+            <h3>Open or Reload Google Flow</h3>
+            <p>Navigate to <code>flow.google.com</code> or click <strong>Reload Current Tab</strong> if Flow is already open.</p>
+          </div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">3</div>
+          <div class="step-text">
+            <h3>Seamless Access</h3>
+            <p>FlowPass intercepts configuration checks in memory to allow full Flow functionality.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <p><strong>Privacy & Independence:</strong> FlowPass operates 100% locally on your machine. All RPC adaptations happen directly in-memory within your browser. No external configuration servers or third-party networks are contacted.</p>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <span>FlowPass &bull; Local Operation</span>
+    <div class="footer-links">
+      <a href="https://zephinax.com" target="_blank" rel="noopener noreferrer">zephinax.com</a>
+      <a href="https://t.me/FlowPass" target="_blank" rel="noopener noreferrer">Telegram</a>
+    </div>
+  </footer>
+</main>
+</body>
+</html>

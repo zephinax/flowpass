@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'none';">
+<title>FlowPass</title>
+<link rel="stylesheet" href="panel.css">
+</head>
+<body>
+<main class="app-container">
+  <!-- Multi-layered ambient lighting -->
+  <div class="ambient-glow-left" aria-hidden="true"></div>
+  <div class="ambient-glow-right" aria-hidden="true"></div>
+
+  <!-- Header Section -->
+  <header class="app-header">
+    <div class="brand-wrap">
+      <div class="brand-icon-box">
+        <img class="brand-icon" src="assets/icon.png" alt="FlowPass" width="24" height="27">
+      </div>
+      <div class="brand-text">
+        <div class="brand-title-row">
+          <img class="brand-logotype" src="assets/logo-type.png" alt="FlowPass" height="19">
+          <span class="version-badge">v1.1.0</span>
+        </div>
+        <span class="brand-caption">Autonomous Flow Controller</span>
+      </div>
+    </div>
+    <a href="info.html" target="_blank" rel="noopener noreferrer" class="icon-link-btn" title="Documentation & Guide" aria-label="Documentation and Guide">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <path d="M12 16v-4"></path>
+        <path d="M12 8h.01"></path>
+      </svg>
+    </a>
+  </header>
+
+  <!-- Hero Status Card -->
+  <section id="status-card" class="card hero-status-card" data-state="idle">
+    <div class="status-top-bar">
+      <span class="status-eyebrow">ENGINE STATE</span>
+      <div class="status-pill status-pill--idle">
+        <span class="status-ping" aria-hidden="true"></span>
+        <span class="status-dot"></span>
+        <span class="status-pill-text">CHECKING</span>
+      </div>
+    </div>
+
+    <div class="status-body">
+      <h2 id="status-title" class="status-title">Checking status…</h2>
+      <p id="status-desc" class="status-desc">Connecting to helper script…</p>
+      
+      <!-- Compatibility anchor for legacy scripts -->
+      <div id="status" class="legacy-status-anchor" aria-hidden="true">
+        <span class="status-dot"></span>
+        <span class="status-text"></span>
+      </div>
+    </div>
+
+    <!-- Toggle Island -->
+    <div class="toggle-island">
+      <div class="toggle-info">
+        <span class="toggle-title">Protection Engine</span>
+        <span class="toggle-subtitle">Client-side region bypass</span>
+      </div>
+      <button id="toggle" class="switch" role="switch" aria-checked="false" aria-label="Enable Protection Engine" disabled>
+        <span class="switch-track">
+          <span class="switch-thumb"></span>
+        </span>
+      </button>
+    </div>
+  </section>
+
+  <!-- 2x2 Technical Environment Matrix -->
+  <section class="card matrix-card">
+    <div class="matrix-grid">
+      <div class="matrix-item">
+        <span class="matrix-label">TARGET GATEWAY</span>
+        <div class="matrix-value">
+          <span class="target-beacon"></span>
+          <span class="truncate">flow.google.com</span>
+        </div>
+      </div>
+      <div class="matrix-item">
+        <span class="matrix-label">CORE MODE</span>
+        <div class="matrix-value">
+          <span class="gradient-tag">Autonomous Local</span>
+        </div>
+      </div>
+      <div class="matrix-item">
+        <span class="matrix-label">OPERATION</span>
+        <div class="matrix-value">In-Memory XHR</div>
+      </div>
+      <div class="matrix-item">
+        <span class="matrix-label">INTERCEPTOR</span>
+        <div id="interceptor-state" class="matrix-value info-val--idle">Ready</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Action Controls -->
+  <div class="actions-group">
+    <button id="open" class="btn btn-primary" type="button" title="Open Google Flow">
+      <svg class="btn-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+        <polyline points="15 3 21 3 21 9"></polyline>
+        <line x1="10" y1="14" x2="21" y2="3"></line>
+      </svg>
+      <span>Open Flow</span>
+    </button>
+    <button id="reload" class="btn btn-secondary" type="button" title="Reload Current Tab" hidden>
+      <svg class="btn-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"></path>
+      </svg>
+      <span>Reload Tab</span>
+    </button>
+  </div>
+
+  <!-- Error Notification Banner (Conditional) -->
+  <div id="error-box" class="error-banner" hidden>
+    <svg class="error-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"></circle>
+      <line x1="12" y1="8" x2="12" y2="12"></line>
+      <line x1="12" y1="16" x2="12.01" y2="16"></line>
+    </svg>
+    <span id="error" class="error-text" role="alert"></span>
+  </div>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="footer-meta">
+      <svg class="footer-shield" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+      </svg>
+      <span>Local Sandbox • Zero Telemetry</span>
+    </div>
+    <a href="https://zephinax.com" target="_blank" rel="noopener noreferrer" class="footer-link">
+      zephinax.com
+    </a>
+  </footer>
+</main>
+<script src="panel.js"></script>
+</body>
+</html>
